@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wonder Lash · Big screen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=Tenor+Sans&family=Jost:wght@400&display=swap">
+<style>
+  :root{--wine:#6E0F24;--wine-2:#8A1631;--muted:#7A5A66}
+  [hidden]{display:none!important}
+  html,body{margin:0;height:100%;overflow:hidden;cursor:none}
+  body{background:radial-gradient(120% 90% at 50% 20%,#FDF1F5 0%,#F7E3EA 55%,#EFCBD8 100%)}
+  canvas{position:fixed;inset:0;width:100%;height:100%}
+  .brand{position:fixed;top:4vh;left:4vw;font:1.6vw "Tenor Sans",Arial,sans-serif;letter-spacing:.2em;color:var(--wine);text-transform:uppercase}
+  .ov{position:fixed;inset:0;display:grid;place-items:center;text-align:center;pointer-events:none}
+  .live{align-self:end;margin-bottom:5vh;background:rgba(255,250,252,.85);border-radius:999px;padding:.7em 1.8em;
+    font:1.8vw "Tenor Sans",Arial,sans-serif;color:var(--wine);display:flex;gap:1.2em;align-items:center}
+  .live b{font:italic 500 1.4em "Bodoni Moda",Georgia,serif;color:var(--wine-2)}
+  .thanks{display:grid;gap:.4em;padding:4vh 8vw;background:radial-gradient(closest-side,rgba(252,243,246,.92),rgba(252,243,246,.6) 70%,transparent)}
+  .big{font:italic 500 11vw/1 "Bodoni Moda",Georgia,serif;color:var(--wine)}
+  .sub{font:2vw "Tenor Sans",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--wine-2)}
+  .n{font:1.6vw "Jost",Arial,sans-serif;color:var(--muted)}
+  .help{position:fixed;right:1.5vw;bottom:1.5vh;font:12px Arial,sans-serif;color:var(--muted);opacity:.7}
+</style></head>
+<body>
+<canvas id="rain"></canvas>
+<div class="brand">The One · Wonder Lash</div>
+<div class="ov" id="ovLive"><div class="live"><span>Tap the sticker. Add your name. Join the launch.</span><b><span class="c">0</span> co-creators</b></div></div>
+<div class="ov" id="ovThanks" hidden><div class="thanks"><div class="sub">Wonder Lash was made with you</div><div class="big">Thank you</div><div class="n"><span class="c">0</span> co-creators · one mascara</div></div></div>
+<div class="help" id="help">T finale · L live · F full screen · H hide help</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="config.js"></script>
+<script src="rain.js"></script>
+<script src="store.js"></script>
+<script>
+(function(){
+  function img(s){var i=new Image();i.src=s;return i;}
+  var rain=createRain(document.getElementById('rain'),{sprites:{bottle:img('bottle.png'),brush:img('brush.png'),swatch:img('swatch.png')}});
+  var cs=document.querySelectorAll('.c');
+  function counts(){var n=rain.names().length;cs.forEach(function(c){c.textContent=n;});}
+  RainStore.listen(function(name,isNew){ if(rain.add(name,isNew)) counts(); });
+  function mode(m){rain.setMode(m);document.getElementById('ovLive').hidden=m!=='live';document.getElementById('ovThanks').hidden=m!=='thanks';}
+  if(location.hash==='#thanks') mode('thanks');
+  document.addEventListener('keydown',function(e){
+    var k=e.key.toLowerCase();
+    if(k==='t') mode('thanks'); if(k==='l') mode('live');
+    if(k==='h'){var h=document.getElementById('help');h.hidden=!h.hidden;}
+    if(k==='f'){ if(document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen().catch(function(){}); }
+  });
+})();
+</script>
+</body></html>

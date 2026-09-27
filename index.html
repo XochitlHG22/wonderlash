@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Join the launch · Wonder Lash Wrap &amp; Length</title>
+<meta name="theme-color" content="#3E0918">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=Tenor+Sans&family=Jost:wght@400;500&display=swap">
+<style>
+  :root{--wine:#6E0F24;--deep:#3E0918;--pink:#F08DB4;--blush:#F7DCE6;--cream:#FBEFF3;--muted:#E9C9D4}
+  *{box-sizing:border-box}[hidden]{display:none!important}
+  html,body{margin:0;min-height:100%}
+  body{background:radial-gradient(120% 80% at 50% 20%,#7A1530 0%,#3E0918 55%,#22050D 100%) fixed;color:var(--cream);font:16px/1.5 "Jost",Arial,sans-serif;
+    padding:max(28px,env(safe-area-inset-top)) 22px max(28px,env(safe-area-inset-bottom));display:grid;place-items:center}
+  main{width:100%;max-width:420px;display:grid;gap:20px;text-align:center}
+  .tag{font:12px "Tenor Sans",Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--pink)}
+  .brand{font:14px "Tenor Sans",Arial,sans-serif;letter-spacing:.3em;color:var(--cream)}
+  h1{font:italic 500 48px/1 "Bodoni Moda",Georgia,serif;margin:2px 0 0;color:var(--cream)}
+  .sub{font:15px "Tenor Sans",Arial,sans-serif;letter-spacing:.24em;color:var(--pink)}
+  img{width:78%;height:auto;margin:0 auto;display:block}
+  p{margin:0;color:var(--muted)}
+  form{display:grid;gap:10px;text-align:left}
+  label{font:12px "Tenor Sans",Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--blush)}
+  input{font:20px "Jost",Arial,sans-serif;padding:.7em .9em;border-radius:14px;border:1px solid rgba(247,220,230,.4);background:#FBF6F8;width:100%;color:#1E0E14}
+  .btn{display:block;font:16px "Tenor Sans",Arial,sans-serif;letter-spacing:.08em;background:var(--pink);color:var(--deep);border:0;border-radius:999px;padding:1em;cursor:pointer;text-decoration:none;text-align:center}
+  .btn.ghost{background:transparent;color:var(--cream);border:1px solid rgba(247,220,230,.5)}
+  button:disabled{opacity:.6}
+  input:focus-visible,.btn:focus-visible{outline:2px solid var(--blush);outline-offset:2px}
+  .err{color:var(--pink);font-size:14px;min-height:1.3em}
+  .hi{font:italic 500 38px/1.1 "Bodoni Moda",Georgia,serif;color:var(--cream)}
+  .card{background:rgba(251,239,243,.08);border:1px solid rgba(247,220,230,.25);border-radius:22px;padding:20px;display:grid;gap:12px}
+  .meta{font:12px "Tenor Sans",Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+</style></head>
+<body><main>
+  <div>
+    <div class="brand">THE ONE</div>
+    <h1>Wonder Lash</h1>
+    <div class="sub">WRAP &amp; LENGTH</div>
+  </div>
+  <img src="pair.png" alt="THE ONE Wonder Lash Wrap &amp; Length mascara">
+
+  <section id="formView" style="display:grid;gap:14px">
+    <p>Welcome to the internal launch. Wonder Lash Wrap &amp; Length was co-created with beauty entrepreneurs, and today you're part of it too.</p>
+    <form id="f" novalidate>
+      <label for="name">Your first name</label>
+      <input id="name" maxlength="24" autocomplete="given-name" autocapitalize="words" enterkeyhint="go" placeholder="e.g. Sofia" required>
+      <p class="err" id="err" aria-live="polite"></p>
+      <button class="btn" id="go" type="submit">Join the launch</button>
+    </form>
+  </section>
+
+  <section id="doneView" hidden style="display:grid;gap:16px">
+    <div class="tag">You're in</div>
+    <div class="hi" id="hi">Welcome</div>
+    <p>Keep an eye on the big screen. Something special is coming at the end.</p>
+    <div class="card">
+      <div class="tag">The Wonder Lash challenge</div>
+      <p>Tap when we start the quiz. The first person with all five right wins a special gift.</p>
+      <a class="btn" id="quiz" href="#" target="_blank" rel="noopener">Open the quiz</a>
+    </div>
+  </section>
+
+  <div class="meta">Internal launch · 30 September 2026 · 15:30</div>
+</main>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="config.js"></script>
+<script src="rain.js"></script>
+<script src="store.js"></script>
+<script>
+(function(){
+  var cfg=window.RAIN_CONFIG, KEY='wonderlash-joined-'+cfg.eventId;
+  document.getElementById('quiz').href=cfg.quizUrl;
+  function done(name){
+    document.getElementById('hi').textContent='Welcome, '+name;
+    document.getElementById('formView').hidden=true; document.getElementById('doneView').hidden=false;
+  }
+  var prev=null; try{prev=localStorage.getItem(KEY);}catch(e){}
+  if(prev){ done(prev); return; }   // a second tap goes straight to the welcome screen
+  var f=document.getElementById('f'), inp=document.getElementById('name'), err=document.getElementById('err'), btn=document.getElementById('go');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=cleanName(inp.value);
+    if(!inp.value.trim()){err.textContent='Write your first name to join.';return;}
+    if(!n){err.textContent='Please use your real first name.';return;}
+    btn.disabled=true; err.textContent='';
+    RainStore.add(n).then(function(){
+      try{localStorage.setItem(KEY,n);}catch(e){}
+      done(n);
+    }).catch(function(){
+      btn.disabled=false; err.textContent='No connection right now. Check your signal and tap again.';
+    });
+  });
+})();
+</script>
+</body></html>
