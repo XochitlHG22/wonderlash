@@ -6,12 +6,11 @@ window.RAIN_CONFIG = {
   // One id per event, so tests and the real launch stay separate
   eventId: "wonderlash-launch",
 
-  // Paste your Firebase web config here. Leave apiKey empty to run in demo mode
-  // (demo mode works only when the tap page and the finale are open in the same browser).
+  // Firebase web config
   firebase: {
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    appId: ""
+    apiKey: "AIzaSyBzHU_yyIJiVv9nbj1niKZCRriCuq8p-xc",
+    authDomain: "wonderlash-dbc91.firebaseapp.com",
+    projectId: "wonderlash-dbc91",
+    appId: "1:800714941522:web:a2e02034b3a64ceb736b8b"
   }
 };
