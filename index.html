@@ -7,8 +7,8 @@
 <style>
   :root{--wine:#6E0F24;--deep:#3E0918;--pink:#F08DB4;--blush:#F7DCE6;--cream:#FBEFF3;--muted:#E9C9D4}
   *{box-sizing:border-box}[hidden]{display:none!important}
-  html,body{margin:0;min-height:100%}
-  body{background:radial-gradient(120% 80% at 50% 20%,#7A1530 0%,#3E0918 55%,#22050D 100%) fixed;color:var(--cream);font:16px/1.5 "Jost",Arial,sans-serif;
+  html{background:#22050D}html,body{margin:0;min-height:100%}
+  body{background:radial-gradient(120% 80% at 50% 20%,#7A1530 0%,#3E0918 55%,#22050D 100%);background-color:#22050D;color:var(--cream);font:16px/1.5 "Jost",Arial,sans-serif;
     padding:max(28px,env(safe-area-inset-top)) 22px max(28px,env(safe-area-inset-bottom));display:grid;place-items:center}
   main{width:100%;max-width:420px;display:grid;gap:20px;text-align:center}
   .tag{font:12px "Tenor Sans",Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--pink)}
@@ -27,6 +27,19 @@
   .err{color:var(--pink);font-size:14px;min-height:1.3em}
   .hi{font:italic 500 38px/1.1 "Bodoni Moda",Georgia,serif;color:var(--cream)}
   .card{background:rgba(251,239,243,.08);border:1px solid rgba(247,220,230,.25);border-radius:22px;padding:20px;display:grid;gap:12px}
+  .card.left{text-align:left}
+  .h2{font:italic 500 28px/1.15 "Bodoni Moda",Georgia,serif;color:var(--cream)}
+  .facts{list-style:none;margin:4px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .facts li{background:rgba(251,239,243,.07);border-radius:14px;padding:12px;display:grid;gap:4px}
+  .facts b{font:italic 500 26px/1 "Bodoni Moda",Georgia,serif;color:var(--pink)}
+  .facts span{font-size:14px;line-height:1.35;color:var(--muted)}
+  .facts i{font-style:normal;font:10px "Tenor Sans",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);opacity:.85}
+  video{width:100%;aspect-ratio:1/1;border-radius:16px;background:#22050D;display:block;object-fit:cover}
+  .steps{margin:0;padding:0;list-style:none;counter-reset:s;display:grid;gap:12px}
+  .steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;align-items:start;gap:12px;color:var(--muted);font-size:15px}
+  .steps li::before{content:counter(s);width:34px;height:34px;border-radius:50%;background:var(--pink);color:var(--deep);display:grid;place-items:center;font:500 16px "Jost",Arial,sans-serif}
+  .steps b{color:var(--cream);font-weight:500}
+  .pill{justify-self:start;background:var(--blush);color:var(--wine);border-radius:999px;padding:.55em 1em;font:12px "Tenor Sans",Arial,sans-serif;letter-spacing:.08em}
   .meta{font:12px "Tenor Sans",Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 </style></head>
 <body><main>
@@ -55,6 +68,30 @@
       <div class="tag">The Wonder Lash challenge</div>
       <p>Tap when we start the quiz. The first person with all five right wins a special gift.</p>
       <a class="btn" id="quiz" href="#" target="_blank" rel="noopener">Open the quiz</a>
+    </div>
+
+    <div class="card left">
+      <div class="tag">Meet Wonder Lash</div>
+      <div class="h2">Oriflame's first tubing mascara</div>
+      <p>Lash Wrap Technology wraps every single lash in its own tube. It stays put all day and slides off with just warm water.</p>
+      <ul class="facts">
+        <li><b>Up to 45%</b><span>visibly longer lashes<br><i>clinically tested</i></span></li>
+        <li><b>24h</b><span>wear, no smudges, no flakes<br><i>consumer tested</i></span></li>
+        <li><b>Care</b><span>castor and argan oil inside every tube</span></li>
+        <li><b>Brush</b><span>chosen by our beauty entrepreneurs</span></li>
+      </ul>
+    </div>
+
+    <div class="card left">
+      <div class="tag">How to remove tubing mascara</div>
+      <p>One of the most loved things about tubing mascara is how easy it is to remove, completely without makeup remover.</p>
+      <video src="remove.mp4" poster="remove.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Removing Wonder Lash with warm water: the tubes slide off"></video>
+      <ol class="steps">
+        <li><span><b>Soak</b> the lashes with warm water above 38°C until the mascara starts to soften.</span></li>
+        <li><span><b>Gently massage</b> from root to tip with your fingertips and the tubes will slide off in whole pieces without mess.</span></li>
+        <li><span><b>Rinse</b> with warm water until everything is gone and gently dry with a soft towel.</span></li>
+      </ol>
+      <div class="pill">No remover · No rubbing · No mess</div>
     </div>
   </section>
 
